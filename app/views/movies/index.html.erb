@@ -17,15 +17,12 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-
       <th class="hilite">
         <a id="title_header">
           <%= link_to "Movie Title", movies_path({:sort => "title", "ratings" => Hash[@ratings_to_show.map {|x| [x, '1']}]}), :class => "p-3 mb-2 bg-warning text-dark" %>
         </a>
       </th>
-      
       <th>Rating</th>
-      
       <th class="hilite">
         <a id="release_date_header">
           <%= link_to "Release Date", movies_path({:sort => "release_date", "ratings" => Hash[@ratings_to_show.map {|x| [x, '1']}]}), :class => "p-3 mb-2 bg-warning text-dark" %>
@@ -36,15 +33,9 @@
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
-        <td>
-          <%= movie.title %>
-        </td>
-        <td>
-          <%= movie.rating %>
-        </td>
-        <td>
-          <%= movie.release_date %>
-        </td>
+        <td><%= movie.title %></td>
+        <td><%= movie.rating %></td>
+        <td><%= movie.release_date %></td>
         <td>
           <%= link_to "More about #{movie.title}", movie_path(movie) %>
         </td>
