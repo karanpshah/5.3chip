@@ -6,13 +6,8 @@ class Movie < ActiveRecord::Base
   end
   
   def self.with_ratings(ratings_list)
-    retVal = Array.new
-    Movie.all.each do |m|
-      if ratings_list.include?(m.rating)
-        retVal << m
-      end
-    end
-    retVal
+    retVal = Movie.where("rating in (?)", ratings_list)
+    return retVal
   end
   
 end
