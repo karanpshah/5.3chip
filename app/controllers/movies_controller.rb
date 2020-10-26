@@ -14,20 +14,10 @@ class MoviesController < ApplicationController
     if params["ratings"] != nil
       @ratings_to_show = params["ratings"].keys()
       @movies = Movie.with_ratings(@ratings_to_show)
-    end
+    end   
     
     if params[:sort] != nil
       @movies = @movies.order(params["sort"])
-    end
-    
-    if params["ratings"] == nil
-      params["ratings"] = Hash['G', 1, 'PG', 1, 'PG-13', 1, 'R', 1]
-      
-      if params[:sort] == nil
-        params[:sort] = "title"
-      end
-      
-      redirect_to movies_path({:sort => params[:sort], "ratings" => params["ratings"]})
     end
   end
 
