@@ -11,13 +11,35 @@ class MoviesController < ApplicationController
     @ratings_to_show = Array.new
     @movies = Movie.all
     
-    if params["ratings"] != nil
-      @ratings_to_show = params["ratings"].keys()
+    if params[:ratings] != nil
+      @ratings_to_show = params[:ratings].keys()
       @movies = Movie.with_ratings(@ratings_to_show)
-    end   
+      session[:ratings] = params[:ratings]
+    else
+      if session[:ratings] != nil
+        params[:ratings] = session[:ratings]
+        @ratings_to_show = params[:ratings].keys()
+        @movies = Movie.with_ratings(@ratings_to_show)
+      else
+        params[:ratings] = Hash['G', 1, 'PG', 1, 'PG-13', 1, 'R', 1]
+        session[:ratings] = params[:ratings]
+        @ratings_to_show = params[:ratings].keys()
+        @movies = Movie.with_ratings(@ratings_to_show)
+      end
+    end
     
     if params[:sort] != nil
-      @movies = @movies.order(params["sort"])
+      @movies = @movies.order(params[:sort])
+      session[:sort] = params[:sort]
+    else
+      if session[:sort] != nil
+        params[:sort] = session[:sort]
+        @movies = @movies.order(params[:sort])
+      else
+        params[:sort] = "title"
+        session[:sort] = params[:sort]
+        @movies = @movies.order(params[:sort]) 
+      end
     end
   end
 
